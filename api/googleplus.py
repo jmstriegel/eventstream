@@ -42,6 +42,8 @@ class SearchHandler( basehandler.BaseHandler ):
             who = val['actor']['displayName']
             img_sml = val['actor']['image']['url'].split('sz=')[0] + 'sz=48'
             img_lrg = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
+
+
             # Add to the temp key
             item = {}
             item['id_str'] = key
@@ -50,6 +52,8 @@ class SearchHandler( basehandler.BaseHandler ):
             item['screen_name'] = who
             item['img_sml'] = img_sml
             item['img_lrg'] = img_lrg
+            if 'attachments' in val:
+                item['attached_image'] = val['attachments']['image']
             items.append( item )
 
         return self.response.out.write(json.dumps({ 'items': items, 'raw': data }, indent=2))

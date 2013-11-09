@@ -22,10 +22,8 @@ $(document).ready( function() {
 
 
     searchTwitter( searchquery );
-    searchPlus( searchquery );
     searchinterval = setInterval( function() {
         searchTwitter( searchquery );
-        searchPlus( searchquery );
     }, 10000);
 
     updateinterval = setInterval( function() {
@@ -66,8 +64,8 @@ function updateTweetDetail() {
         var $tweetitem = $('<div id="detail_' + tweet['id']  + '" class="detailholder ' + style + '">' + $detailtemplate.html() + '</div>');
         $tweetitem.css('display','none');
         $tweetitem.find('.photo img').attr('src', tweet['img_lrg'] );
-        $tweetitem.find('.tweettext').text( tweet['text'] );
-        $tweetitem.find('.author').text( tweet['screen_name'] );
+        $tweetitem.find('.tweettext').html( tweet['text'] );
+        $tweetitem.find('.author').text( '@' + tweet['user']['screen_name'] );
         $tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
         $tweetitem.find('.created_friendly').text( $.timeago(tweet['created_at']) );
 
@@ -103,14 +101,27 @@ function updateTweetDetail() {
 
 }
 
+function fetchUserInfo( screenname, $detaildom ) {
+
+    var url = "https://api.twitter.com/1/users/show.json?screen_name=" + encodeURIComponent( screenname ) + "&include_entities=false&callback=?";
+    $.getJSON( url, function(data) {
+
+        if ( data && data['name'] && data['description'] ) {
+            $detaildom.find('.author_name').html( data['name'] );
+            $detaildom.find('.author_info').html( data['description'] );
+        }
+    });
+
+
+}
 
 function showDetail( tweetid ) {
 
     var tweet = foundtweets[tweetid];
 console.log( tweet )
     $tweetitem = $("#tweetfocuscontent");
-    $tweetitem.find('.tweettext').text( tweet['text'] );
-    $tweetitem.find('.author').text( tweet['screen_name'] );
+    $tweetitem.find('.tweettext').html( tweet['text'] );
+    $tweetitem.find('.author').text( '@' + tweet['user']['screen_name'] );
     $tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
 
     $("#tweetfocus").fadeIn();
@@ -128,8 +139,8 @@ function updateTweetList() {
         $tweetitem.css('display','none');
 
         $tweetitem.find('.photo img').attr('src', tweet['img_sml'] );
-        $tweetitem.find('.tweettext').text( tweet['text'] );
-        $tweetitem.find('.author').text( tweet['screen_name'] );
+        $tweetitem.find('.tweettext').html( tweet['text'] );
+        $tweetitem.find('.author').text( '@' + tweet['user']['screen_name'] );
         //$tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
 
         $tweetitem.css('cursor','pointer');
@@ -163,7 +174,7 @@ function fillTweetQueue( tweets ) {
 
             var tweetdata = {};
             tweetdata['id'] = tweet['id_str'];
-            tweetdata['screen_name'] = '<img src="https://g.twimg.com/Twitter_logo_blue.png" width=15 height=15></img>@' + tweet['user']['screen_name'];
+            tweetdata['user'] = tweet['user'];
             tweetdata['text'] = tweet['text'];
             tweetdata['img_sml'] = tweet['user']['profile_image_url'];
             tweetdata['img_lrg'] = tweet['user']['profile_image_url'].replace(/_normal\./, "_reasonably_small.");
@@ -173,58 +184,33 @@ function fillTweetQueue( tweets ) {
             tweetqueue.push( tweetdata );
         }
     }
-}
-
-function fillPlusQueue( posts ) {
-    for ( var x = posts.length-1; x >=0; x-- ) {
-        var post = posts[x];
-        if ( !foundtweets[ post['id_str'] ] ) {
-
-            var data = {};
-            data['id'] = post['id_str'];
-            data['screen_name'] = '<img src="http://blog.wardelldesign.com/wp-content/uploads/2013/09/Google-Plus-Logo.png" width=15 height=15></img>' + post['screen_name'];
-            data['text'] = post['text'];
-            data['img_sml'] = post['img_sml'];
-            data['img_lrg'] = post['img_lrg'];
-            data['created_at'] = post['created_at'];
-
-            foundtweets[ post['id_str'] ] = data;
-            tweetqueue.push( data );
-        }
-    }
 
 }
-
 
 function searchTwitter( query ) {
 
     var tweets = [];
+/*
+    var url = "https://api.twitter.com/1.1/search/tweets.json?count=10&result_type=recent&q=" + encodeURIComponent( query ) + "&callback=?";
+    $.getJSON( url, function(data) {
+
+        if ( data && data['results'] && data['results'].length > 0 ) {
+            tweets = data['results'];
+        }
+        fillTweetQueue( tweets );
+
+    });
+*/
 
     var url = "http://api.twitter.com/1.1/search/tweets.json?count=10&result_type=recent&q=" + encodeURIComponent( query ) + "";
     $.get( '/api/twitter/get', {
         'api_url': url
     }, function( data ) {
-        console.log( data );
+       console.log( data );
         if ( data && data['statuses'] && data['statuses'].length > 0 ) {
             tweets = data['statuses'];
         }
         fillTweetQueue( tweets );
-    });
-
-}
-
-function searchPlus( query ) {
-
-    var posts = [];
-
-    $.get( '/api/googleplus/search', {
-        'q': query
-    }, function( data ) {
-        console.log( data );
-        if ( data && data['items'] && data['items'].length > 0 ) {
-            posts = data['items'];
-        }
-        fillPlusQueue( posts );
     });
 
 }
