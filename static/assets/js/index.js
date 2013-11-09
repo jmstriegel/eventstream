@@ -70,6 +70,11 @@ function updateTweetDetail() {
         $tweetitem.find('.author').text( tweet['screen_name'] );
         $tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
         $tweetitem.find('.created_friendly').text( $.timeago(tweet['created_at']) );
+        if ( tweet['attached_image'] ) {
+            img = $('<img />').attr('src', tweet['attached_image']);
+            $tweetitem.find('.attached_image').css('display','block').append( img );
+            $tweetitem.find('.metadata').addClass('hasimage');
+        }
 
         var $olditem = $('#tweetdetail').children().first();
 
@@ -113,6 +118,11 @@ console.log( tweet )
     $tweetitem.find('.author').text( tweet['screen_name'] );
     $tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
     
+    if ( tweet['attached_image'] ) {
+        img = $('<img />').attr('src', tweet['attached_image']);
+        $tweetitem.find('.attached_image').css('display','block').append( img );
+    }
+
     $("#tweetfocus").fadeIn();
 
 }
@@ -187,7 +197,7 @@ function fillPlusQueue( posts ) {
             data['img_sml'] = post['img_sml'];
             data['img_lrg'] = post['img_lrg'];
             data['created_at'] = post['created_at'];
-            
+            data['attached_image'] = 'http://placekitten.com/g/200/300'   
             foundtweets[ post['id_str'] ] = data;
             tweetqueue.push( data );
         }

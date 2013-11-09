@@ -155,6 +155,24 @@ h2 {
     overflow: hidden;
 }
 
+#tweetdetail .attached_image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#tweetdetail .attached_image img {
+    width: 100%;
+
+}
+
+#tweetdetail .metadata {
+    position: relative;
+}
+#tweetdetail .metadata.hasimage {
+    background-color: rgba(0,0,0,0.2);
+}
+
 #tweetdetail .photo {
     float:left;
     margin: 40px 40px 0 40px;
@@ -179,6 +197,7 @@ h2 {
     font-size: 45px;
     margin: 0 40px 0 40px;
     padding-top: 30px;
+    padding-bottom: 30px;
     clear:both;
     color: #ffffff;
 }
