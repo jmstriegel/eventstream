@@ -1,0 +1,240 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    color: #ffffff;
+    min-width: 980px;
+    font-family: georgia, serif;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #000;
+}
+
+#logo {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 3;
+    display:none;
+}
+#overview .logo {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    display:none;
+}
+
+#overview {
+    width: 100%;
+    min-width: 980px;
+    background-color: #40c1c8;
+    position: fixed;
+    top: 0;
+    height: 100px;
+    z-index: 10;
+
+}
+
+.style-0 {
+    background-color: #55b052;
+}
+.style-1 {
+    background-color: #1d4599;
+}
+.style-2 {
+    background-color: #ec1d90;
+}
+.style-3 {
+    background-color: #fbb016;
+}
+.style-4 {
+    background-color: #ed2227;
+}
+
+
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 21px;
+    line-height: 1em;
+    margin:0;
+    padding:0;
+    border:0;
+    letter-spacing: .05em;
+    color: #5e6323;
+    text-shadow: 1px 1px 0px #9ca928;
+}
+h1 strong {
+    font-weight: 700;
+    color: #5e6323;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 61px;
+    line-height: 1em;
+    margin:0;
+    padding:0;
+    border:0;
+    letter-spacing: .03em;
+}
+
+#overview h1 {
+    position: absolute;
+    right: 20px;
+    top: 38px;
+}
+#overview h2 {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+}
+
+.detailholder {
+    height: 100%;
+}
+
+#tweetdetail {
+    position: fixed;
+    width: 60%;
+    right: 0px;
+    background-color: #ec1d90;
+    height: 100%;
+    top: 0;
+    z-index: 1;
+    margin-top: 100px;
+}
+
+#tweetfocus {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    color: #fff;
+    top:0;
+    left:0;
+    background-color: transparent;
+    display: table;
+}
+#tweetfocus_bg {
+    background-color: #000;
+    opacity: .9;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+}
+#tweetfocuscontent {
+    z-index: 15;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    padding-top: 100px;
+}
+#tweetfocuscontent DIV {
+    z-index: 15;
+    position:relative;
+}
+
+#tweetwall {
+    width: 40%;
+    top: 100px;
+    bottom: 0px;
+    position: absolute;
+    overflow: hidden;
+}
+
+#tweetdetail .photo {
+    float:left;
+    margin: 40px 40px 0 40px;
+}
+#tweetdetail .authordetails {
+    font-size: 20px;
+    padding-top: 40px;
+    margin: 0px 40px 0 40px;
+}
+#tweetdetail .author {
+    font-size: 40px;
+    line-height: 40px;
+    padding-top: 24px;
+    display: block;
+    color: #ffffff;
+}
+#tweetdetail .author_name, #tweetdetail .author_info {
+    display: none;
+}
+
+#tweetdetail .tweettext {
+    font-size: 45px;
+    margin: 0 40px 0 40px;
+    padding-top: 30px;
+    clear:both;
+    color: #ffffff;
+}
+#tweetdetail .created_friendly {
+    margin: 10px 0 0 20px;
+    font-size: 21px;
+    line-height: 21px;
+}
+
+
+#tweetwall .photo {
+    clear: both;
+    float:left;
+    margin: 0 10px 0 20px;
+    padding-top: 20px;
+}
+#tweetwall .tweettext {
+    clear: both;
+    font-size: 20px;
+    margin: 20px 20px 0 20px;
+    /*font-style: italic;*/
+    padding: 10px 0 20px 0;
+    color: #ffffff;
+}
+#tweetwall .byline {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 36px 20px 0 0;
+    color: #fff;
+}
+
+#tweetfocus .photo {
+    float:left;
+    margin: 0 20px 0 0;
+}
+#tweetfocus .authordetails {
+    font-size: 43px;
+    color: #fff;
+    padding-top: 20px;
+    margin: 0px auto 0 auto;
+    width: 80%;
+    text-align:left;
+}
+#tweetfocus .tweettext {
+    font-size: 60px;
+    color: #12aec6;
+    margin: 0 auto 0 auto;
+    padding-top: 20px;
+    clear:both;
+    width: 80%;
+    text-align:left;
+}
+#tweetfocus .created_friendly {
+    margin: 10px auto 0 auto;
+    text-align: left;
+    font-size: 21px;
+    width: 80%;
+}
+

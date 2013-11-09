@@ -1,0 +1,69 @@
+<html>
+<head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.timeago.js"></script>
+
+    <script>
+        var searchquery = "{{search_term}}";
+    </script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/index.css" type="text/css" media="screen" />
+
+    <title>{{title}}</title>
+</head>
+<body>
+
+    <img id="logo" src="/assets/images/blank.gif" />
+    <div id="overview">
+    <!-- h1>{{heading_text}}</h1 -->
+    <img src="/assets/images/blank.gif" class="logo" />
+    <h2>{{search_term}}</h2>
+    </div>
+
+    <div id="tweetwall">
+
+
+
+    <div id="tweettemplate">
+        <div class="photo"><img width="48" height="48"  src="/assets/images/blank.gif" /></div>
+        <div class="byline"> 
+            <span class="author"></span>
+        </div>
+        <div class="tweettext"></div>
+    </div>
+
+    </div>
+
+    <div id="tweetdetail">
+
+
+    <div id="tweetdetailtemplate">
+        <div class="photo"><img width="128" height="128" src="/assets/images/blank.gif" /></div>
+        <div class="authordetails">
+            <span class="author"></span>
+            <span class="author_name"></span>
+            <div class="author_info"></div>
+            <div class="created_at"></div>
+            <div class="created_friendly"></div>
+        </div>
+        <div class="tweettext"></div>
+    </div>
+
+    </div>
+
+
+    <div id="tweetfocus" style="display:none">
+    <div id="tweetfocus_bg"></div>
+    <div id="tweetfocuscontent">
+        <div class="tweettext"></div>
+        <div class="authordetails"><span class="author_name"></span><span class="author"></span></div>
+        <div class="created_at"></div>
+        <div class="created_friendly"></div>
+    </div>
+
+    </div>
+
+</body>
+</html>

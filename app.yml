@@ -1,0 +1,18 @@
+application: jms-howardhack
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /
+  script: index.app
+
+- url: /assets/
+  static_dir: static/assets
+
+- url: /oauth/.*
+  script: oauth.app
+
+- url: /api/twitter/.*
+  script: api.twitter.app

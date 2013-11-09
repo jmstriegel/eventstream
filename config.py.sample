@@ -1,0 +1,13 @@
+
+config = {
+    'title': 'HackStream',
+    'heading_text': 'Hack',
+    'search_term': '#hack',
+    'twitter_application_key': 'put your key here',
+    'twitter_application_secret': 'secrets go here',
+    'handlerconfig': {
+        'webapp2_extras.sessions': {
+            'secret_key': 'makeuparandomstring'
+        }
+    }
+}
