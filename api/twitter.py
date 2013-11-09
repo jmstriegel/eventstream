@@ -1,8 +1,12 @@
+import json
+import logging
 import os
 import pickle
+import urllib2
 import webapp2
+
 from google.appengine.ext.webapp import template
-import logging
+
 
 from eslib import basehandler
 from contrib import oauth
@@ -10,7 +14,7 @@ from urlparse import urlparse, parse_qs
 
 from config import config
 
-class GetHandler( basehandler.BaseHandler ):
+class TwitterHandler( basehandler.BaseHandler ):
 
     def get( self ):
 
@@ -33,7 +37,7 @@ class GetHandler( basehandler.BaseHandler ):
             twitter_username = twitter_user_info['username']
 
         self.response.headers['Content-Type'] = 'application/json'
-       
+
 
         api_url = self.request.get('api_url')
 
@@ -45,7 +49,7 @@ class GetHandler( basehandler.BaseHandler ):
 
 
         callback_url = "%s/oauth/verify" % self.request.host_url
-        client = oauth.TwitterClient(application_key, application_secret, 
+        client = oauth.TwitterClient(application_key, application_secret,
                 callback_url)
 
         logging.info( 'token: ' + twitter_token + ' secret: ' + twitter_secret )
@@ -54,13 +58,45 @@ class GetHandler( basehandler.BaseHandler ):
         return self.response.out.write(result.content)
 
 
+class PlusHandler( basehandler.BaseHandler ):
+
+    def get( self ):
+        googlePlusUrl = 'https://www.googleapis.com/plus/v1/activities?query=%23howardhack&key=AIzaSyB8rONLHXKSGpqB1yovS95JSyqTQqmPtuI'
+
+        # Get the Google+ JSON.
+        try:
+          result = urllib2.urlopen(googlePlusUrl)
+          # Parse the Google+ JSON.
+          data = json.loads(result.read())
+        except urllib2.URLError, e:
+          handleError(e)
 
 
 
-app = webapp2.WSGIApplication( 
+        output = []
+        for val in data['items']:
+          tmp = {}
+          key = val['published']
+          title = val['title']
+          actor = val['actor']
+          who = val['actor']['displayName']
+          pic = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
+
+          # Add to the temp key
+          tmp['key'] = key
+          tmp['title'] = title
+          tmp['name'] = name
+          tmp['picUrl'] = pic
+          output.append(tmp)
+        return json.dump({output})
+
+
+
+app = webapp2.WSGIApplication(
         [
-            ('/api/twitter/get', GetHandler)
-        ], 
+            ('/api/twitter/get', TwitterHandler),
+            ('/api/plus/get', PlusHandler)
+        ],
         debug=True,
         config=config['handlerconfig']
     )
