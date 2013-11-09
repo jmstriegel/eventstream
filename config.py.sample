@@ -5,6 +5,7 @@ config = {
     'search_term': '#hack',
     'twitter_application_key': 'put your key here',
     'twitter_application_secret': 'secrets go here',
+    'google_api_key': 'google api key here',
     'handlerconfig': {
         'webapp2_extras.sessions': {
             'secret_key': 'makeuparandomstring'
