@@ -35,8 +35,8 @@ class SearchHandler( basehandler.BaseHandler ):
         for val in data['items']:
           key = val['id']
           time = val['published'] #2013-11-09T07:56:12.755Z
-          d = datetime.strptime(time,'%Y-%m-%dT%H:%M:%S:%f%z')
-          twitterTime = d.strftime('%a %b %d %H:%M:%S %z %Y')
+          d = datetime.strptime(time,'%Y-%m-%dT%H:%M:%S.%fZ')
+          twitterTime = d.strftime('%a %b %d %H:%M:%S +0000 %Y')
 
           title = val['title']
           actor = val['actor']
