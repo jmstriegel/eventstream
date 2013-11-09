@@ -16,3 +16,5 @@ handlers:
 
 - url: /api/twitter/.*
   script: api.twitter.app
+- url: /api/googleplus/.*
+  script: api.googleplus.app
