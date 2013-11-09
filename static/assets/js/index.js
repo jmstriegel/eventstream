@@ -71,8 +71,16 @@ function updateTweetDetail() {
         $tweetitem.find('.created_at').text( tweet['created_at'] ).css('display','none');
         $tweetitem.find('.created_friendly').text( $.timeago(tweet['created_at']) );
         if ( tweet['attached_image'] ) {
-            img = $('<img />').attr('src', tweet['attached_image']);
-            $tweetitem.find('.attached_image').css('display','block').append( img );
+            //img = $('<img />').attr('src', tweet['attached_image']);
+            $tweetitem.find('.attached_image')
+                .css({
+                    'display': 'block',
+                    'background-size': 'cover',
+                    'background-repeat': 'no-repeat',
+                    'background-position': '50% 50%',
+                    'background-image': 'url(' + tweet['attached_image'] + ')'
+                });
+                //.append( img );
             $tweetitem.find('.metadata').addClass('hasimage');
         }
 
@@ -179,6 +187,10 @@ function fillTweetQueue( tweets ) {
             tweetdata['img_lrg'] = tweet['user']['profile_image_url'].replace(/_normal\./, "_reasonably_small.");
             tweetdata['created_at'] = tweet['created_at'];
             
+            if ( tweet['entities'] && tweet['entities']['media'] && tweet['entities']['media'][0]['type'] == 'photo' ) {
+                tweetdata['attached_image'] = tweet['entities']['media'][0]['media_url'];
+                console.log('found:' + tweetdata['attached_image'] );
+            }
             foundtweets[ tweet['id_str'] ] = tweetdata;
             tweetqueue.push( tweetdata );
         }

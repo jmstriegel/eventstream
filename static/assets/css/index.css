@@ -162,8 +162,8 @@ h2 {
     overflow: hidden;
 }
 #tweetdetail .attached_image img {
-    width: 100%;
-
+    min-width: 100%;
+    min-height: 100%;
 }
 
 #tweetdetail .metadata {
