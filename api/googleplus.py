@@ -20,7 +20,7 @@ class SearchHandler( basehandler.BaseHandler ):
         self.response.headers['Content-Type'] = 'application/json'
 
 
-       
+
         api_key = config['google_api_key']
         search_term = self.request.get('q')
         logging.info( 'search term: ' + search_term )
@@ -29,20 +29,37 @@ class SearchHandler( basehandler.BaseHandler ):
 
         result = self.get_request( url=api_url ).get_result();
         logging.info( result )
-        return self.response.out.write(result.content)
+        data = json.loads(result.read())
+        output = []
+        for val in data['items']:
+          tmp = {}
+          key = val['published']
+          title = val['title']
+          actor = val['actor']
+          who = val['actor']['displayName']
+          pic = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
+
+          # Add to the temp key
+          tmp['key'] = key
+          tmp['title'] = title
+          tmp['name'] = name
+          tmp['picUrl'] = pic
+          output.append(tmp)
+
+        return self.response.out.write(json.dump({output}))
 
 
     def get_request(self, url, method=urlfetch.GET, headers={}):
-    
+
         rpc = urlfetch.create_rpc(deadline=10.0)
         urlfetch.make_fetch_call(rpc, url, method=method, headers=headers)
         return rpc
 
 
-app = webapp2.WSGIApplication( 
+app = webapp2.WSGIApplication(
         [
             ('/api/googleplus/search', SearchHandler)
-        ], 
+        ],
         debug=True,
         config=config['handlerconfig']
     )
