@@ -30,28 +30,27 @@ class SearchHandler( basehandler.BaseHandler ):
 
         result = self.get_request( url=api_url ).get_result();
         data = json.loads(result.content)
-        logging.info( result.content )
         items = []
         for val in data['items']:
-          key = val['id']
-          time = val['published'] #2013-11-09T07:56:12.755Z
-          d = datetime.strptime(time,'%Y-%m-%dT%H:%M:%S.%fZ')
-          twitterTime = d.strftime('%a %b %d %H:%M:%S +0000 %Y')
+            key = val['id']
+            time = val['published'] #2013-11-09T07:56:12.755Z
+            d = datetime.strptime(time,'%Y-%m-%dT%H:%M:%S.%fZ')
+            twitterTime = d.strftime('%a %b %d %H:%M:%S +0000 %Y')
 
-          title = val['title']
-          actor = val['actor']
-          who = val['actor']['displayName']
-          img_sml = val['actor']['image']['url'].split('sz=')[0] + 'sz=48'
-          img_lrg = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
-          # Add to the temp key
-          item = {}
-          item['id_str'] = key
-          item['created_at'] = twitterTime
-          item['text'] = title
-          item['screen_name'] = who
-          item['img_sml'] = img_sml
-          item['img_lrg'] = img_lrg
-          items.append( item )
+            title = val['title']
+            actor = val['actor']
+            who = val['actor']['displayName']
+            img_sml = val['actor']['image']['url'].split('sz=')[0] + 'sz=48'
+            img_lrg = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
+            # Add to the temp key
+            item = {}
+            item['id_str'] = key
+            item['created_at'] = twitterTime
+            item['text'] = title
+            item['screen_name'] = who
+            item['img_sml'] = img_sml
+            item['img_lrg'] = img_lrg
+            items.append( item )
 
         return self.response.out.write(json.dumps({ 'items': items, 'raw': data }, indent=2))
 
