@@ -4,7 +4,7 @@ import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.api import urlfetch
 import logging
-
+import json
 from eslib import basehandler
 from contrib import oauth
 from urlparse import urlparse, parse_qs
@@ -28,11 +28,10 @@ class SearchHandler( basehandler.BaseHandler ):
 
 
         result = self.get_request( url=api_url ).get_result();
-        logging.info( result )
-        data = json.loads(result.read())
-        output = []
+        data = json.loads(result.content)
+        logging.info( result.content )
+        items = []
         for val in data['items']:
-          tmp = {}
           key = val['published']
           title = val['title']
           actor = val['actor']
@@ -40,13 +39,14 @@ class SearchHandler( basehandler.BaseHandler ):
           pic = val['actor']['image']['url'].split('sz=')[0] + 'sz=128'
 
           # Add to the temp key
-          tmp['key'] = key
-          tmp['title'] = title
-          tmp['name'] = name
-          tmp['picUrl'] = pic
-          output.append(tmp)
-
-        return self.response.out.write(json.dump({output}))
+          item = {}
+          item['key'] = key
+          item['title'] = title
+          item['name'] = who
+          item['picUrl'] = pic
+          items.append( item )
+        
+        return self.response.out.write(json.dumps({ 'items': items, 'raw': data }, indent=2))
 
 
     def get_request(self, url, method=urlfetch.GET, headers={}):
