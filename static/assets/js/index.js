@@ -197,7 +197,9 @@ function fillPlusQueue( posts ) {
             data['img_sml'] = post['img_sml'];
             data['img_lrg'] = post['img_lrg'];
             data['created_at'] = post['created_at'];
-            data['attached_image'] = 'http://placekitten.com/g/200/300'   
+            if ( post['attached_image'] ) {
+                data['attached_image'] = post['attached_image'];
+            }
             foundtweets[ post['id_str'] ] = data;
             tweetqueue.push( data );
         }
