@@ -8,7 +8,7 @@ Requirements
 ------------
 
 1. An AppEngine account, configured for Google+ access, and a server API key.
-2. A twitter app, and its OAuth id and app secret.
+2. A twitter app, and its OAuth Consumer Key and Secret.
 3. Google AppEngine SDK (so you can deploy it).
 
 

@@ -201,7 +201,6 @@ function fillPlusQueue( posts ) {
     for ( var x = posts.length-1; x >=0; x-- ) {
         var post = posts[x];
         if ( !foundtweets[ post['id_str'] ] ) {
-            
             var data = {};
             data['id'] = post['id_str'];
             data['screen_name'] = '+' + post['screen_name'];
@@ -224,11 +223,11 @@ function searchTwitter( query ) {
 
     var tweets = [];
 
-    var url = "http://api.twitter.com/1.1/search/tweets.json?count=10&result_type=recent&q=" + encodeURIComponent( query ) + "";
+    var url = "https://api.twitter.com/1.1/search/tweets.json?count=10&result_type=recent&q=" + encodeURIComponent( query ) + "";
     $.get( '/api/twitter/get', {
         'api_url': url
     }, function( data ) {
-        console.log( data ); 
+        console.log( data );
         if ( data && data['statuses'] && data['statuses'].length > 0 ) {
             tweets = data['statuses'];
         }
@@ -244,7 +243,7 @@ function searchPlus( query ) {
     $.get( '/api/googleplus/search', {
         'q': query
     }, function( data ) {
-        console.log( data ); 
+        console.log( data );
         if ( data && data['items'] && data['items'].length > 0 ) {
             posts = data['items'];
         }
