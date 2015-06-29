@@ -23,6 +23,7 @@ class TwitterHandler( basehandler.BaseHandler ):
         twitter_user_info = None
         if ( 'twitter_user_info' in self.session ):
             twitter_user_info = self.session['twitter_user_info']
+
         twitter_secret = ''
         twitter_token = ''
         twitter_username = ''
